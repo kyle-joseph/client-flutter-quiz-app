@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "424587547380",
+    "project_id": "ndia-app-7e647",
+    "storage_bucket": "ndia-app-7e647.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424587547380:android:413477e5a08d215d77c4a1",
+        "android_client_info": {
+          "package_name": "com.example.ndia_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424587547380-2i7pcgcpm39961nfbj0ubd9uef8u8v0m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAioziyqToHwOFzfDb3pCaoSUJen11A5Yg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424587547380-2i7pcgcpm39961nfbj0ubd9uef8u8v0m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
