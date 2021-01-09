@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ndia_app/state/app_state.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesBody extends StatefulWidget {
   @override
@@ -23,6 +25,7 @@ class _CategoriesBodyState extends State<CategoriesBody> {
             color: Color(0xff3B4768),
             shape: CircleBorder(),
             onPressed: () {
+              Provider.of<AppState>(context, listen: false).setCategory(title);
               Navigator.pushNamed(context, '/scoredesc');
             },
             child: Padding(

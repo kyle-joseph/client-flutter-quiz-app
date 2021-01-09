@@ -2,12 +2,12 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ScoreDescriptionBody extends StatelessWidget {
+class SummaryBody extends StatelessWidget {
   Widget rowScore({String range, String description}) {
     return Container(
       padding: EdgeInsets.only(
-        top: 20,
-        bottom: 20,
+        top: 5,
+        bottom: 5,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,8 +24,8 @@ class ScoreDescriptionBody extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     textStyle: TextStyle(
                       color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w800,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
@@ -35,18 +35,14 @@ class ScoreDescriptionBody extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Container(
-              child: BorderedText(
-                strokeWidth: 3,
-                strokeColor: Color(0xff1B233F),
-                child: Text(
-                  description,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                    textStyle: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w800,
-                    ),
+              child: Text(
+                description,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.nunito(
+                  textStyle: TextStyle(
+                    color: Color(0xff75E48D),
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ),
@@ -60,6 +56,7 @@ class ScoreDescriptionBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(top: 40),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
@@ -72,54 +69,63 @@ class ScoreDescriptionBody extends StatelessWidget {
       ),
       child: SingleChildScrollView(
         child: Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 40,
+          ),
           width: MediaQuery.of(context).size.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width - 50,
+                padding: EdgeInsets.symmetric(
+                  horizontal: 50,
+                ),
                 margin: EdgeInsets.only(
-                  top: 20,
-                  bottom: 40,
+                  top: 25,
+                  bottom: 30,
                 ),
                 child: Text(
-                  'DEPENDING ON YOUR SCORE:',
+                  'SUMMARY OF SCORES',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.concertOne(
                     textStyle: TextStyle(
                       color: Color(0xffDAD785),
                       fontSize: 35,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(
-                  bottom: 25,
+                  bottom: 20,
                 ),
                 child: Column(
                   children: [
-                    rowScore(range: '8 - 10', description: 'Knowledgeable'),
-                    rowScore(range: '5 - 7', description: 'Average'),
-                    rowScore(range: '1 - 4', description: 'Noob'),
-                    rowScore(range: '0', description: 'Ogobs'),
+                    rowScore(range: '1', description: 'Correct'),
+                    rowScore(range: '2', description: 'Correct'),
+                    rowScore(range: '3', description: 'Correct'),
+                    rowScore(range: '4', description: 'Wrong'),
+                    rowScore(range: '5', description: 'Wrong'),
+                    rowScore(range: '6', description: 'Correct'),
+                    rowScore(range: '7', description: 'Correct'),
+                    rowScore(range: '8', description: 'Correct'),
+                    rowScore(range: '9', description: 'Wrong'),
+                    rowScore(range: '10', description: 'Wrong'),
                   ],
                 ),
               ),
               Container(
                 child: FlatButton(
                   child: Text(
-                    'TAP TO CONTINUE',
+                    'CONTINUE',
                     style: GoogleFonts.nunito(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight: FontWeight.w800,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        '/question', (Route<dynamic> route) => false);
+                    Navigator.popAndPushNamed(context, '/result');
                   },
                 ),
               )
