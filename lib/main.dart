@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ndia_app/screens/categories/categories.dart';
+import 'package:ndia_app/screens/score_description/score_description.dart';
 import 'package:ndia_app/screens/welcome/welcome.dart';
 import 'package:ndia_app/state/app_state.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,7 @@ class Main extends StatelessWidget {
         routes: {
           '/home': (context) => Welcome(),
           '/categories': (context) => Categories(),
+          '/scoredesc': (context) => ScoreDescription(),
         },
       ),
     );

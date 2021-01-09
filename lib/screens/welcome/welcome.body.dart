@@ -51,7 +51,7 @@ class WelcomeBody extends StatelessWidget {
                           fontSize: 80,
                           color: Color(0xff1B233F),
                           strokeColor: Color(0xffF1A368),
-                          strokeWidth: 5.0,
+                          strokeWidth: 7.0,
                         ),
                       ),
                       Container(
@@ -75,7 +75,7 @@ class WelcomeBody extends StatelessWidget {
                     fontSize: 80,
                     color: Color(0xff1B233F),
                     strokeColor: Color(0xffF1A368),
-                    strokeWidth: 5.0,
+                    strokeWidth: 7.0,
                   ),
                 ),
                 Container(
@@ -97,7 +97,7 @@ class WelcomeBody extends StatelessWidget {
                       ),
                     ),
                     onPressed: () async {
-                      await Navigator.popAndPushNamed(context, "/categories");
+                      await Navigator.pushNamed(context, "/categories");
                     },
                   ),
                 )

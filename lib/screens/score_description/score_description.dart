@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ndia_app/screens/categories/categories.body.dart';
+import 'package:ndia_app/screens/score_description/score_description.body.dart';
 
-class Categories extends StatelessWidget {
+class ScoreDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +13,7 @@ class Categories extends StatelessWidget {
         backgroundColor: Color(0xff1B233F),
         elevation: 0,
       ),
-      body: CategoriesBody(),
+      body: ScoreDescriptionBody(),
     );
   }
 }

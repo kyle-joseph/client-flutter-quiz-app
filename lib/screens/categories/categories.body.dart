@@ -22,7 +22,9 @@ class _CategoriesBodyState extends State<CategoriesBody> {
           RaisedButton(
             color: Color(0xff3B4768),
             shape: CircleBorder(),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, '/scoredesc');
+            },
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Container(
@@ -32,14 +34,16 @@ class _CategoriesBodyState extends State<CategoriesBody> {
               ),
             ),
           ),
-          Container(
-            child: Text(
-              title,
-              style: GoogleFonts.concertOne(
-                textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
+          Expanded(
+            child: Container(
+              child: Text(
+                title,
+                style: GoogleFonts.concertOne(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ),
@@ -71,7 +75,7 @@ class _CategoriesBodyState extends State<CategoriesBody> {
               children: [
                 Container(
                   margin: EdgeInsets.only(
-                    top: 50,
+                    top: 15,
                     bottom: 45,
                   ),
                   child: Text(
