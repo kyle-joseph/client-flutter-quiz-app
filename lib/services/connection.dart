@@ -8,7 +8,7 @@ class Connection {
     try {
       var response =
           await http.get('https://jsonplaceholder.typicode.com/posts').timeout(
-                Duration(seconds: 30),
+                Duration(seconds: 15),
               );
       if (response.statusCode == 200) {
         print('connected');

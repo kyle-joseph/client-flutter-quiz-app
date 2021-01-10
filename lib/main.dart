@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:ndia_app/screens/categories/categories.dart';
 import 'package:ndia_app/screens/questions/questions.dart';
 import 'package:ndia_app/screens/result/result.dart';
@@ -71,8 +72,35 @@ class Main extends StatelessWidget {
 class SomethingWentWrong extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Somthing Went Wrong'),
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        body: Center(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  child: Image.asset('assets/images/something.png'),
+                ),
+                Container(
+                  child: Text(
+                    'Something went wrong...',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.nunito(
+                      textStyle: TextStyle(
+                        color: Color(0xffE30037),
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
