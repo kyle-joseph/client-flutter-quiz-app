@@ -130,8 +130,8 @@ class _SummaryBodyState extends State<SummaryBody> {
                     'CONTINUE',
                     style: GoogleFonts.nunito(
                       color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w900,
                     ),
                   ),
                   onPressed: () {

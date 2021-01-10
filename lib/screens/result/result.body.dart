@@ -99,10 +99,11 @@ class ResultBody extends StatelessWidget {
               ),
               Container(
                 child: FlatButton(
+                  color: Color(0xffFAA800),
                   child: Text(
                     'PLAY AGAIN',
                     style: GoogleFonts.nunito(
-                      color: Colors.white,
+                      color: Color(0xff1B233F),
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),

@@ -14,7 +14,8 @@ class _QuestionsBodyState extends State<QuestionsBody> {
   List _questionList = [];
   String _answer = '';
   int _counter = 0;
-  bool tapped = false;
+  bool oneTap = true;
+  int correctIndex = -1;
 
   Widget circularNumber({String title}) {
     return Container(
@@ -55,6 +56,7 @@ class _QuestionsBodyState extends State<QuestionsBody> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.symmetric(
               horizontal: 10,
               vertical: 10,
@@ -78,6 +80,15 @@ class _QuestionsBodyState extends State<QuestionsBody> {
   }
 
   Widget choiceButton(int index, String choice) {
+    Color _activeColor;
+
+    if (choice == _questionList[_counter].data()['correct']) {
+      _activeColor = Color(0xff2BB544);
+      correctIndex = index;
+    } else {
+      _activeColor = Color(0xffE30037);
+    }
+
     return Container(
       padding: EdgeInsets.all(5),
       margin: EdgeInsets.only(
@@ -87,7 +98,7 @@ class _QuestionsBodyState extends State<QuestionsBody> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        color: active[index] ? Color(0xff2BB544) : Color(0xff3B4768),
+        color: active[index] ? _activeColor : Color(0xff3B4768),
         child: Text(
           choice,
           textAlign: TextAlign.center,
@@ -100,15 +111,13 @@ class _QuestionsBodyState extends State<QuestionsBody> {
           ),
         ),
         onPressed: () {
-          setState(() {
-            active[index] = !active[index];
-            tapped = true;
-            _answer = choice;
-          });
-          for (int x = 0; x < active.length; x++) {
-            if (x != index && active[x]) {
-              active[x] = !active[x];
-            }
+          if (oneTap) {
+            setState(() {
+              active[index] = true;
+              active[correctIndex] = true;
+              _answer = choice;
+              oneTap = false;
+            });
           }
         },
       ),
@@ -163,17 +172,14 @@ class _QuestionsBodyState extends State<QuestionsBody> {
                     ),
                   ),
                   onPressed: () {
-                    // Navigator.of(context).pushNamedAndRemoveUntil(
-                    //     '/question', (Route<dynamic> route) => false);
-                    // Navigator.popAndPushNamed(context, '/summary');
-                    if (tapped) {
+                    if (!oneTap) {
                       if (_counter < _questionList.length - 1) {
                         setState(() {
+                          oneTap = true;
                           _counter++;
                           for (int x = 0; x < active.length; x++) {
                             active[x] = false;
                           }
-                          tapped = !tapped;
                         });
                       } else {
                         Navigator.popAndPushNamed(context, '/summary');
