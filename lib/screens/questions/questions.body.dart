@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ndia_app/state/app_state.dart';
+import 'package:provider/provider.dart';
 
 class QuestionsBody extends StatefulWidget {
   @override
@@ -9,8 +11,10 @@ class QuestionsBody extends StatefulWidget {
 
 class _QuestionsBodyState extends State<QuestionsBody> {
   List<bool> active = [false, false, false, false];
+  List _questionList = [];
+  String _answer = '';
+  int _counter = 0;
   bool tapped = false;
-  // bool act2 = false;
 
   Widget circularNumber({String title}) {
     return Container(
@@ -60,7 +64,7 @@ class _QuestionsBodyState extends State<QuestionsBody> {
             ),
             child: Container(
               child: Text(
-                "What is a sudden release of energy in the earth's crust or upper mantle, usually caused by movement along a fault plane?",
+                _questionList[_counter].data()['question'],
                 style: GoogleFonts.nunito(
                   color: Color(0xff1B233F),
                   fontSize: 20,
@@ -73,9 +77,9 @@ class _QuestionsBodyState extends State<QuestionsBody> {
     );
   }
 
-  Widget choiceButton(int index) {
+  Widget choiceButton(int index, String choice) {
     return Container(
-      height: 45,
+      padding: EdgeInsets.all(5),
       margin: EdgeInsets.only(
         bottom: 15,
       ),
@@ -83,9 +87,10 @@ class _QuestionsBodyState extends State<QuestionsBody> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        color: active[index] ? Color(0xff75E48D) : null,
+        color: active[index] ? Color(0xff2BB544) : Color(0xff3B4768),
         child: Text(
-          'START HERE',
+          choice,
+          textAlign: TextAlign.center,
           style: GoogleFonts.nunito(
             textStyle: TextStyle(
               color: Colors.white,
@@ -98,6 +103,7 @@ class _QuestionsBodyState extends State<QuestionsBody> {
           setState(() {
             active[index] = !active[index];
             tapped = true;
+            _answer = choice;
           });
           for (int x = 0; x < active.length; x++) {
             if (x != index && active[x]) {
@@ -111,6 +117,9 @@ class _QuestionsBodyState extends State<QuestionsBody> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic appstate = Provider.of<AppState>(context);
+    _questionList = appstate.questionList;
+
     return Container(
       padding: EdgeInsets.only(top: 40),
       width: MediaQuery.of(context).size.width,
@@ -128,7 +137,7 @@ class _QuestionsBodyState extends State<QuestionsBody> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              circularNumber(title: '1'),
+              circularNumber(title: '${_counter + 1}'),
               questionContainer(),
               Container(
                 margin: EdgeInsets.only(
@@ -136,10 +145,10 @@ class _QuestionsBodyState extends State<QuestionsBody> {
                 ),
                 child: Column(
                   children: [
-                    choiceButton(0),
-                    choiceButton(1),
-                    choiceButton(2),
-                    choiceButton(3),
+                    choiceButton(0, _questionList[_counter].data()['a']),
+                    choiceButton(1, _questionList[_counter].data()['b']),
+                    choiceButton(2, _questionList[_counter].data()['c']),
+                    choiceButton(3, _questionList[_counter].data()['d']),
                   ],
                 ),
               ),
@@ -157,6 +166,22 @@ class _QuestionsBodyState extends State<QuestionsBody> {
                     // Navigator.of(context).pushNamedAndRemoveUntil(
                     //     '/question', (Route<dynamic> route) => false);
                     // Navigator.popAndPushNamed(context, '/summary');
+                    if (tapped) {
+                      if (_counter < _questionList.length - 1) {
+                        setState(() {
+                          _counter++;
+                          for (int x = 0; x < active.length; x++) {
+                            active[x] = false;
+                          }
+                          tapped = !tapped;
+                        });
+                      } else {
+                        Navigator.popAndPushNamed(context, '/summary');
+                      }
+                      print(_answer);
+                      appstate.addAnswer(_answer);
+                    }
+                    print(_counter);
                   },
                 ),
               )

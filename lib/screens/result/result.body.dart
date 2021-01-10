@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ndia_app/state/app_state.dart';
+import 'package:provider/provider.dart';
 
 class ResultBody extends StatelessWidget {
+  String scoreDescription(int score, int total) {
+    dynamic percentage = (score / total) * 100;
+    percentage = percentage.toInt();
+
+    if (percentage <= 100 && percentage >= 80) {
+      return 'Knowledgeable';
+    } else if (percentage <= 70 && percentage >= 50) {
+      return 'Average';
+    } else if (percentage <= 40 && percentage >= 10) {
+      return 'Noob';
+    } else if (percentage == 0) {
+      return 'Ogobs';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String _score = Provider.of<AppState>(context).score;
+    int _scoreResult = Provider.of<AppState>(context).scoreResult;
+    int _totalScore = Provider.of<AppState>(context).totalScore;
     return Container(
       padding: EdgeInsets.only(top: 40),
       width: MediaQuery.of(context).size.width,
@@ -20,11 +40,11 @@ class ResultBody extends StatelessWidget {
         child: Container(
           height: MediaQuery.of(context).size.height - 50,
           padding: EdgeInsets.symmetric(
-            horizontal: 40,
+            horizontal: 10,
           ),
           width: MediaQuery.of(context).size.width,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
                 padding: EdgeInsets.symmetric(
@@ -43,39 +63,40 @@ class ResultBody extends StatelessWidget {
                 ),
               ),
               Container(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        child: Text(
-                          '6/10',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.passionOne(
-                            textStyle: TextStyle(
-                              color: Color(0xffDAD785),
-                              fontSize: 70,
-                              fontWeight: FontWeight.w400,
-                            ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      child: Text(
+                        _score,
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.passionOne(
+                          textStyle: TextStyle(
+                            color: Color(0xffDAD785),
+                            fontSize: 70,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
-                      Container(
-                        child: Text(
-                          'Average',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.passionOne(
-                            textStyle: TextStyle(
-                              color: Color(0xffDAD785),
-                              fontSize: 50,
-                              fontWeight: FontWeight.w300,
-                            ),
+                    ),
+                    Container(
+                      child: Text(
+                        scoreDescription(_scoreResult, _totalScore),
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.passionOne(
+                          textStyle: TextStyle(
+                            color: Color(0xffDAD785),
+                            fontSize: 45,
+                            fontWeight: FontWeight.w300,
                           ),
                         ),
                       ),
-                    ],
-                  )),
+                    ),
+                  ],
+                ),
+              ),
               Container(
                 child: FlatButton(
                   child: Text(

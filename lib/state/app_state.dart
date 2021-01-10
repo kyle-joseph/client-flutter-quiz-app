@@ -15,9 +15,14 @@ class AppState extends ChangeNotifier {
 
   List get answerResult => _answerResult;
 
-  String get score => '${_score.toString}/${_questions.length}';
+  String get score => '$_score/${_questions.length}';
+
+  int get scoreResult => _score;
+
+  int get totalScore => _questions.length;
 
   void addAnswer(String answer) {
+    print(answer + 'kyle');
     _answers.add(answer);
     notifyListeners();
   }
@@ -48,6 +53,7 @@ class AppState extends ChangeNotifier {
           _answerResult.add('Wrong');
         }
       }
+      print(_score);
       return _answerResult;
     }
     return [];

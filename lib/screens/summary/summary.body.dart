@@ -1,8 +1,17 @@
 import 'package:bordered_text/bordered_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ndia_app/state/app_state.dart';
+import 'package:provider/provider.dart';
 
-class SummaryBody extends StatelessWidget {
+class SummaryBody extends StatefulWidget {
+  @override
+  _SummaryBodyState createState() => _SummaryBodyState();
+}
+
+class _SummaryBodyState extends State<SummaryBody> {
+  List _answerSummary = [];
+
   Widget rowScore({String range, String description}) {
     return Container(
       padding: EdgeInsets.only(
@@ -35,19 +44,25 @@ class SummaryBody extends StatelessWidget {
           Expanded(
             flex: 4,
             child: Container(
-              child: Text(
-                description,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.nunito(
-                  textStyle: TextStyle(
-                    color: Color(0xff75E48D),
-                    fontSize: 22,
-                    fontWeight: FontWeight.w800,
+              child: BorderedText(
+                strokeWidth: 3,
+                strokeColor: Colors.white,
+                child: Text(
+                  description,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.nunito(
+                    textStyle: TextStyle(
+                      color: description == 'Correct'
+                          ? Color(0xff2BB544)
+                          : Color(0xffE30037),
+                      fontSize: 22,
+                      fontWeight: FontWeight.w900,
+                    ),
                   ),
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -55,6 +70,8 @@ class SummaryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _answerSummary = Provider.of<AppState>(context).getResult();
+
     return Container(
       padding: EdgeInsets.only(top: 40),
       width: MediaQuery.of(context).size.width,
@@ -100,18 +117,11 @@ class SummaryBody extends StatelessWidget {
                   bottom: 20,
                 ),
                 child: Column(
-                  children: [
-                    rowScore(range: '1', description: 'Correct'),
-                    rowScore(range: '2', description: 'Correct'),
-                    rowScore(range: '3', description: 'Correct'),
-                    rowScore(range: '4', description: 'Wrong'),
-                    rowScore(range: '5', description: 'Wrong'),
-                    rowScore(range: '6', description: 'Correct'),
-                    rowScore(range: '7', description: 'Correct'),
-                    rowScore(range: '8', description: 'Correct'),
-                    rowScore(range: '9', description: 'Wrong'),
-                    rowScore(range: '10', description: 'Wrong'),
-                  ],
+                  children: List.generate(_answerSummary.length, (index) {
+                    return rowScore(
+                        range: '${index + 1}',
+                        description: _answerSummary[index]);
+                  }),
                 ),
               ),
               Container(

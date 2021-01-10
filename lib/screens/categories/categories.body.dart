@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ndia_app/services/connection.dart';
 import 'package:ndia_app/state/app_state.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class CategoriesBody extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class CategoriesBody extends StatefulWidget {
 }
 
 class _CategoriesBodyState extends State<CategoriesBody> {
+  Connection conn = new Connection();
   final List<dynamic> _imageList = [
     ['assets/images/earthquake.png', 'Earthquake'],
     ['assets/images/flood.png', 'Flashflood'],
@@ -24,9 +27,16 @@ class _CategoriesBodyState extends State<CategoriesBody> {
           RaisedButton(
             color: Color(0xff3B4768),
             shape: CircleBorder(),
-            onPressed: () {
-              Provider.of<AppState>(context, listen: false).setCategory(title);
-              Navigator.pushNamed(context, '/scoredesc');
+            onPressed: () async {
+              bool connection = await conn.checkConnection();
+              if (connection) {
+                Provider.of<AppState>(context, listen: false)
+                    .setCategory(title);
+                Navigator.pushNamed(context, '/scoredesc');
+              } else {
+                Toast.show("No Internet Connection", context,
+                    duration: 5, gravity: Toast.BOTTOM);
+              }
             },
             child: Padding(
               padding: const EdgeInsets.all(20),
@@ -93,8 +103,6 @@ class _CategoriesBodyState extends State<CategoriesBody> {
                   ),
                 ),
                 Expanded(
-                  // width: MediaQuery.of(context).size.width - 40,
-                  // height: 500,
                   child: Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: 20,
