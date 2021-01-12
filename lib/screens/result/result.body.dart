@@ -14,7 +14,7 @@ class ResultBody extends StatelessWidget {
       return 'Average';
     } else if (percentage <= 40 && percentage >= 10) {
       return 'Noob';
-    } else if (percentage == 0) {
+    } else {
       return 'Ogobs';
     }
   }
