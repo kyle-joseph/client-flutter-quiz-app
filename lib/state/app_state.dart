@@ -78,8 +78,8 @@ class AppState extends ChangeNotifier {
 
   Future getResult() async {
     getCorrect();
-    String url = 'https://tropicalfishdom.ga/api/calculate-score';
-    // String url = 'http://192.168.1.10/ndia-rest-api/public/api/calculate-score';
+    // String url = 'https://tropicalfishdom.ga/api/calculate-score';
+    String url = 'http://192.168.1.10/ndia-rest-api/public/api/calculate-score';
     var response = await http.post(
       url,
       headers: <String, String>{
