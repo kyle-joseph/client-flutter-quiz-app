@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ndia_app/screens/categories/categories.dart';
+import 'package:ndia_app/screens/loading.dart';
 import 'package:ndia_app/screens/questions/questions.dart';
 import 'package:ndia_app/screens/result/result.dart';
 import 'package:ndia_app/screens/score_description/score_description.dart';
@@ -97,25 +97,6 @@ class SomethingWentWrong extends StatelessWidget {
                   ),
                 )
               ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Loading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Container(
-            child: SpinKitDoubleBounce(
-              color: Color(0xff1B233F),
-              size: 100.0,
             ),
           ),
         ),

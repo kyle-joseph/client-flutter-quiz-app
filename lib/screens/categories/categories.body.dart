@@ -30,9 +30,9 @@ class _CategoriesBodyState extends State<CategoriesBody> {
             onPressed: () async {
               bool connection = await conn.checkConnection();
               if (connection) {
+                Navigator.pushNamed(context, '/scoredesc');
                 Provider.of<AppState>(context, listen: false)
                     .setCategory(title);
-                Navigator.pushNamed(context, '/scoredesc');
               } else {
                 Toast.show("No Internet Connection", context,
                     duration: 5, gravity: Toast.BOTTOM);

@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ndia_app/screens/loading.dart';
+import 'package:ndia_app/services/connection.dart';
 import 'package:ndia_app/state/app_state.dart';
 import 'package:provider/provider.dart';
+import 'package:toast/toast.dart';
 
 class QuestionsBody extends StatefulWidget {
   @override
@@ -10,6 +13,7 @@ class QuestionsBody extends StatefulWidget {
 }
 
 class _QuestionsBodyState extends State<QuestionsBody> {
+  Connection conn = new Connection();
   List<bool> active = [false, false, false, false];
   List _questionList = [];
   String _answer = '';
@@ -129,72 +133,78 @@ class _QuestionsBodyState extends State<QuestionsBody> {
     dynamic appstate = Provider.of<AppState>(context);
     _questionList = appstate.questionList;
 
-    return Container(
-      padding: EdgeInsets.only(top: 40),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(
-            'assets/images/background.jpg',
-          ),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              circularNumber(title: '${_counter + 1}'),
-              questionContainer(),
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 20,
+    return !appstate.loadedQuestions
+        ? Loading()
+        : Container(
+            padding: EdgeInsets.only(top: 40),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  'assets/images/background.jpg',
                 ),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    choiceButton(0, _questionList[_counter].data()['a']),
-                    choiceButton(1, _questionList[_counter].data()['b']),
-                    choiceButton(2, _questionList[_counter].data()['c']),
-                    choiceButton(3, _questionList[_counter].data()['d']),
+                    circularNumber(title: '${_counter + 1}'),
+                    questionContainer(),
+                    Container(
+                      margin: EdgeInsets.only(
+                        bottom: 20,
+                      ),
+                      child: Column(
+                        children: [
+                          choiceButton(0, _questionList[_counter].data()['a']),
+                          choiceButton(1, _questionList[_counter].data()['b']),
+                          choiceButton(2, _questionList[_counter].data()['c']),
+                          choiceButton(3, _questionList[_counter].data()['d']),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: FlatButton(
+                        child: Text(
+                          'CONTINUE',
+                          style: GoogleFonts.nunito(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (!oneTap) {
+                            if (_counter < _questionList.length - 1) {
+                              setState(() {
+                                oneTap = true;
+                                _counter++;
+                                for (int x = 0; x < active.length; x++) {
+                                  active[x] = false;
+                                }
+                              });
+                            } else {
+                              bool connection = await conn.checkConnection();
+                              if (connection) {
+                                Navigator.popAndPushNamed(context, '/summary');
+                              } else {
+                                Toast.show("No Internet Connection", context,
+                                    duration: 5, gravity: Toast.BOTTOM);
+                              }
+                            }
+                            appstate.addAnswer(_answer);
+                          }
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
-              Container(
-                child: FlatButton(
-                  child: Text(
-                    'CONTINUE',
-                    style: GoogleFonts.nunito(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  onPressed: () {
-                    if (!oneTap) {
-                      if (_counter < _questionList.length - 1) {
-                        setState(() {
-                          oneTap = true;
-                          _counter++;
-                          for (int x = 0; x < active.length; x++) {
-                            active[x] = false;
-                          }
-                        });
-                      } else {
-                        Navigator.popAndPushNamed(context, '/summary');
-                      }
-                      print(_answer);
-                      appstate.addAnswer(_answer);
-                    }
-                    print(_counter);
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+            ),
+          );
   }
 }

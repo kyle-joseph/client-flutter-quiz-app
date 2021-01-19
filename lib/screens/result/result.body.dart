@@ -4,26 +4,26 @@ import 'package:ndia_app/state/app_state.dart';
 import 'package:provider/provider.dart';
 
 class ResultBody extends StatelessWidget {
-  String scoreDescription(int score, int total) {
-    dynamic percentage = (score / total) * 100;
-    percentage = percentage.toInt();
+  // String scoreDescription(int score, int total) {
+  //   dynamic percentage = (score / total) * 100;
+  //   percentage = percentage.toInt();
 
-    if (percentage <= 100 && percentage >= 80) {
-      return 'Knowledgeable';
-    } else if (percentage <= 70 && percentage >= 50) {
-      return 'Average';
-    } else if (percentage <= 40 && percentage >= 10) {
-      return 'Noob';
-    } else {
-      return 'Ogobs';
-    }
-  }
+  //   if (percentage <= 100 && percentage >= 80) {
+  //     return 'Knowledgeable';
+  //   } else if (percentage <= 70 && percentage >= 50) {
+  //     return 'Average';
+  //   } else if (percentage <= 40 && percentage >= 10) {
+  //     return 'Noob';
+  //   } else {
+  //     return 'Ogobs';
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     String _score = Provider.of<AppState>(context).score;
-    int _scoreResult = Provider.of<AppState>(context).scoreResult;
-    int _totalScore = Provider.of<AppState>(context).totalScore;
+    String _description = Provider.of<AppState>(context).description;
+
     return Container(
       padding: EdgeInsets.only(top: 40),
       width: MediaQuery.of(context).size.width,
@@ -83,7 +83,7 @@ class ResultBody extends StatelessWidget {
                     ),
                     Container(
                       child: Text(
-                        scoreDescription(_scoreResult, _totalScore),
+                        _description,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.passionOne(
                           textStyle: TextStyle(
